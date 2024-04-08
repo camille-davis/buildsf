@@ -46,7 +46,7 @@
 	<body class="@if (isset($page->id))page-{{ $page->id }}@endif">
 
         <x-nav :settings="$settings" :items="$navLinks" />
-            
+
 		<main>
 
             <div id="alerts">
@@ -67,7 +67,7 @@
                 </div><!-- end .inner -->
             </div><!-- end #alerts -->
 
-			@yield ('content')
+			@yield('content')
 
             <x-footer :settings="$settings" :pageid="$page->id ?? null" :blocks="$footerBlocks"/>
 

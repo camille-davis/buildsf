@@ -21,24 +21,26 @@ class MediaController extends Controller
         return view('media', [
             'classes' => 'page',
             'media' => $this->media,
-            'settings' => $this->settings
+            'settings' => $this->settings,
         ]);
     }
 
     public function getMediaData($stringIDs = null)
     {
-        if (!$stringIDs) {
+        if (! $stringIDs) {
             return $this->media;
         }
 
         $ids = explode(' ', $stringIDs);
         $media = Media::findManyInOrder($ids);
+
         return $media;
     }
 
     public function getProjectMediaData($projectID)
     {
         $media = Media::where('project_id', $projectID)->get();
+
         return $media;
     }
 
@@ -62,12 +64,12 @@ class MediaController extends Controller
                 $mime = $file->getMimeType();
                 if ($mime == 'image/png') {
                     $filename = $rawFilename . '.png';
-                    $img = imageCreateFromPng($file);
+                    $img = imagecreatefrompng($file);
 
-                    imageAlphaBlending($img, true);
-                    imageSaveAlpha($img, true);
+                    imagealphablending($img, true);
+                    imagesavealpha($img, true);
 
-                    imagePng($img, storage_path('app/public/media/' . $filename));
+                    imagepng($img, storage_path('app/public/media/' . $filename));
 
                     $width = imagesx($img);
                     $height = imagesy($img);
@@ -85,32 +87,33 @@ class MediaController extends Controller
                     } else {
                         $thumb = $img;
                     }
-                    imagePng($thumb, storage_path('app/public/media/' . $rawFilename . '_thumb.png'));
+                    imagepng($thumb, storage_path('app/public/media/' . $rawFilename . '_thumb.png'));
                 } else {
                     $filename = $rawFilename . '.jpg';
-                    $img = imageCreateFromJpeg($file);
-                    imageJpeg($img, storage_path('app/public/media/' . $filename), 100);
+                    $img = imagecreatefromjpeg($file);
+                    imagejpeg($img, storage_path('app/public/media/' . $filename), 100);
                     $width = imagesx($img);
                     if ($width > 767) {
-                        $thumb = imageScale($img, 767);
+                        $thumb = imagescale($img, 767);
                     } else {
                         $thumb = $img;
                     }
 
-                    imageJpeg($thumb, storage_path('app/public/media/' . $rawFilename . '_thumb.jpg'), 100);
+                    imagejpeg($thumb, storage_path('app/public/media/' . $rawFilename . '_thumb.jpg'), 100);
                 }
                 if (isset($img)) {
-                    imageDestroy($img);
+                    imagedestroy($img);
                 }
                 if (isset($thumb)) {
-                    imageDestroy($thumb);
+                    imagedestroy($thumb);
                 }
 
-                if (!$project) {
+                if (! $project) {
                     Media::create([
                         'filename' => $filename,
                         'alt' => '',
                     ]);
+
                     continue;
                 }
 
@@ -118,7 +121,7 @@ class MediaController extends Controller
             }
         }
 
-        if (!$project) {
+        if (! $project) {
             return redirect('/admin/media');
         }
 
@@ -133,7 +136,7 @@ class MediaController extends Controller
         ]);
 
         $media = Media::find($id);
-        if (!$media) {
+        if (! $media) {
             abort(404); // TODO
         }
 
@@ -158,6 +161,7 @@ class MediaController extends Controller
         if ($request->header('Content-Type') !== 'application/json') {
             // TODO
         }
+
         return response()->json(['success' => 'success'], 200);
     }
 
@@ -177,6 +181,7 @@ class MediaController extends Controller
 
         if ($media->project_id == '') {
             $media->delete();
+
             return redirect('/admin/media');
         }
 
@@ -187,7 +192,7 @@ class MediaController extends Controller
         }
 
         $project = Project::find($media->project_id);
-        if (!$project) {
+        if (! $project) {
             return redirect('/admin/media');
         }
 

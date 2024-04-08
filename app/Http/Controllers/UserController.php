@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Settings;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
-use App\Models\Settings;
 
 class UserController extends Controller
 {
@@ -15,21 +15,12 @@ class UserController extends Controller
         $this->settings = Settings::find(1);
     }
 
-    public function showForm()
-    {
-        return view('user', [
-            'user' => Auth::user(),
-            'settings' => $this->settings,
-            'classes' => 'page'
-        ]);
-    }
-
     public function update(Request $request)
     {
         request()->validate([
-            "username" => 'max:160|required',
-            "name" => 'max:160|required',
-            "email" => 'email|max:160|required',
+            'username' => 'max:160|required',
+            'name' => 'max:160|required',
+            'email' => 'email|max:160|required',
         ]);
 
         $user = Auth::user();
@@ -43,6 +34,15 @@ class UserController extends Controller
         }
 
         return redirect('/admin/user')->with('success', 'Your user information was successfully updated.');
+    }
+
+    public function showForm()
+    {
+        return view('user', [
+            'user' => Auth::user(),
+            'settings' => $this->settings,
+            'classes' => 'page',
+        ]);
     }
     //
 }

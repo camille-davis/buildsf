@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use App\Models\Media;
+use stdClass;
 
 class Project extends Model
 {
@@ -19,7 +19,7 @@ class Project extends Model
 
     public static function createBlank()
     {
-        $project = new Project();
+        $project = new Project;
 
         $projects = Project::orderBy('weight', 'ASC')->get();
         $count = count($projects);
@@ -39,10 +39,10 @@ class Project extends Model
 
     public static function getAll()
     {
-        $projects = array();
+        $projects = [];
         $projectsData = Project::orderBy('weight', 'ASC')->get();
         foreach ($projectsData as $data) {
-            $project = new \stdClass();
+            $project = new stdClass;
             $project->id = $data->id;
             $project->title = $data->title;
             $project->body = $data->body;
@@ -51,6 +51,7 @@ class Project extends Model
 
             if ($data->featured_image_id == '') {
                 $projects[] = $project;
+
                 continue;
             }
 
@@ -70,7 +71,7 @@ class Project extends Model
 
         foreach ($array as $key => $value) {
             $project = Project::find($value);
-            if (!$project) {
+            if (! $project) {
                 continue;
             }
             $project->weight = $key;
@@ -81,7 +82,7 @@ class Project extends Model
     public static function deleteAndShift($id)
     {
         $project = Project::find($id);
-        if (!$project) {
+        if (! $project) {
             return; // TODO
         }
 
@@ -92,7 +93,7 @@ class Project extends Model
         while ($i < $count) {
             $projects[$i]->weight -= 1;
             $projects[$i]->save();
-            ++$i;
+            $i++;
         }
 
         $media = Media::where('project_id', $project->id)->get();

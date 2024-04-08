@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Block;
-use App\Models\Page;
 use App\Models\Media;
+use App\Models\Page;
 use App\Models\Project;
 use App\Models\Section;
 use App\Models\Settings;
@@ -23,11 +23,18 @@ class ProjectController extends Controller
         $this->domain = preg_replace('/https?:\/\//i', '', $url);
     }
 
+    public function create()
+    {
+        $project = Project::createBlank();
+
+        return redirect('/project/' . $project->slug);
+    }
+
     public function show($slug)
     {
 
         $project = Project::where('slug', $slug)->first();
-        if (!$project) {
+        if (! $project) {
             abort(404);
         }
 
@@ -47,57 +54,16 @@ class ProjectController extends Controller
 
         $footerBlocks = Block::where('location', 'footer')->orderBy('weight', 'ASC')->get();
 
-        $data = array(
+        $data = [
             'settings' => $this->settings,
             'navLinks' => $navLinks,
             'footerBlocks' => $footerBlocks,
             'project' => $project,
             'media' => $media,
             'featuredImage' => $featuredImage,
-        );
+        ];
 
         return view('project', $data);
-    }
-
-    public function showPrev($slug)
-    {
-        $project = Project::where('slug', $slug)->first();
-        if (!$project) {
-            abort(404);
-        }
-
-        $count = count($this->projects);
-        if ($project->weight == 0) {
-            $nextProject = $this->projects[$count - 1];
-        } else {
-            $nextProject = $this->projects[$project->weight - 1];
-        }
-
-        return redirect('/project/' . $nextProject->slug);
-    }
-
-    public function showNext($slug)
-    {
-        $project = Project::where('slug', $slug)->first();
-        if (!$project) {
-            abort(404);
-        }
-
-        $count = count($this->projects);
-        if ($project->weight == $count - 1) {
-            $nextProject = $this->projects[0];
-        } else {
-            $nextProject = $this->projects[$project->weight + 1];
-        }
-
-        return redirect('/project/' . $nextProject->slug);
-    }
-
-    public function create()
-    {
-        $project = Project::createBlank();
-
-        return redirect('/project/' . $project->slug);
     }
 
     public function update(Request $request, $id)
@@ -111,7 +77,7 @@ class ProjectController extends Controller
         ]);
 
         $project = Project::find($id);
-        if (!$project) {
+        if (! $project) {
             abort(404); // TODO
         }
 
@@ -131,7 +97,42 @@ class ProjectController extends Controller
         if ($request->header('Content-Type') !== 'application/json') {
             return; // TODO
         }
+
         return response()->json(['success' => 'success'], 200);
+    }
+
+    public function showPrev($slug)
+    {
+        $project = Project::where('slug', $slug)->first();
+        if (! $project) {
+            abort(404);
+        }
+
+        $count = count($this->projects);
+        if ($project->weight == 0) {
+            $nextProject = $this->projects[$count - 1];
+        } else {
+            $nextProject = $this->projects[$project->weight - 1];
+        }
+
+        return redirect('/project/' . $nextProject->slug);
+    }
+
+    public function showNext($slug)
+    {
+        $project = Project::where('slug', $slug)->first();
+        if (! $project) {
+            abort(404);
+        }
+
+        $count = count($this->projects);
+        if ($project->weight == $count - 1) {
+            $nextProject = $this->projects[0];
+        } else {
+            $nextProject = $this->projects[$project->weight + 1];
+        }
+
+        return redirect('/project/' . $nextProject->slug);
     }
 
     public function updateWeights(Request $request)
@@ -142,6 +143,7 @@ class ProjectController extends Controller
         if ($request->header('Content-Type') !== 'application/json') {
             return; // TODO
         }
+
         return response()->json(['success' => 'success'], 200);
     }
 

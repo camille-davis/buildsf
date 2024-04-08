@@ -1,8 +1,8 @@
-@extends ('layout')
+@extends('layout')
 
-@section ('content')
+@section('content')
 
-<div class="@auth editing @endauth project container" id="project-{{ $project->id ?? '' }}">           
+<div class="@auth editing @endauth project container" id="project-{{ $project->id ?? '' }}">
 
     @auth
     <div class="actions project-actions">
@@ -40,7 +40,7 @@
                 <input name="slug" type="text" value="{{ $project->slug ?? '' }}" maxlength="50" required placeholder="new-project">
             </div>
 
-            <input name="title" type="text" value="{{ $project->title ?? ''}}"  maxlength="120">
+            <input name="title" type="text" value="{{ $project->title ?? '' }}"  maxlength="120">
             <textarea name="body" id="project-{{ $project->id ?? '' }}-to-send" class="to-send" maxlength="10000">{!! Purify::clean($project->body ?? '' ) !!}</textarea>
 
             <button class="save" type="submit" title="save">
@@ -64,7 +64,7 @@
 
             <div class="body">
                 <div class="inside">
-                
+
                     <h1 class="title page-title">{{ $project->title ?? '' }}</h1>
 
                     @if (Auth::check())

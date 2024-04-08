@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 use App\Models\Project;
+use App\Models\Review;
 use App\Models\Section;
 use App\Models\Settings;
-use App\Models\Review;
 use Illuminate\Http\Request;
 use Stevebauman\Purify\Facades\Purify;
 
@@ -51,7 +51,7 @@ class SectionController extends Controller
         ]);
 
         $section = Section::find($id);
-        if (!$section) {
+        if (! $section) {
             abort(404); // TODO
         }
 
@@ -66,6 +66,7 @@ class SectionController extends Controller
         if ($request->header('Content-Type') !== 'application/json') {
             // TODO
         }
+
         return response()->json(['success' => 'success'], 200);
     }
 
@@ -76,6 +77,7 @@ class SectionController extends Controller
         if ($request->header('Content-Type') !== 'application/json') {
             // TODO
         }
+
         return response()->json(['success' => 'success'], 200);
     }
 
@@ -86,6 +88,7 @@ class SectionController extends Controller
         if ($request->header('Content-Type') !== 'application/json') {
             // TODO
         }
+
         return response()->json(['success' => 'success'], 200);
     }
 
@@ -96,6 +99,7 @@ class SectionController extends Controller
         if ($request->header('Content-Type') === 'application/json') {
             return response()->json(['success' => 'success'], 200);
         }
+
         return redirect('/');
     }
 }

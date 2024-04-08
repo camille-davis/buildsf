@@ -1,6 +1,6 @@
-@extends ('layout')
+@extends('layout')
 
-@section ('content')
+@section('content')
 
 @if (isset($page) && $page)
 
@@ -50,7 +50,7 @@
             <h1 class="title page-title">{{ $page->title ?? '' }}</h1>
         </div>
     </div><!-- end .inner -->
-    
+
 </div><!-- end .container -->
 
 @auth

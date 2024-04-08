@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Request;
 use App\Models\Settings;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Stevebauman\Purify\Facades\Purify;
 
 class SettingsController extends Controller
@@ -19,36 +19,36 @@ class SettingsController extends Controller
     {
         return view('settings', [
             'settings' => $this->settings,
-            'classes' => 'page'
+            'classes' => 'page',
         ]);
     }
 
     public function updateSettings(Request $request)
     {
         request()->validate([
-            "name" => 'max:160|nullable',
-            "logo_url" => 'max:160|nullable',
-            "meta_description" => 'max:160|nullable',
-            "email" => 'email|max:160|nullable',
-            "google_ads_client" => 'max:40|nullable',
-            "google_ads_slot" => 'max:20|nullable',
-            "tracking_id" => 'max:20|nullable',
-            "social_bandcamp" => 'max:100|nullable',
-            "social_email" => 'email|max:100|nullable',
-            "social_facebook" => 'max:100|nullable',
-            "social_houzz" => 'max:100|nullable',
-            "social_instagram" => 'max:100|nullable',
-            "social_linkedin" => 'max:100|nullable',
-            "social_pinterest" => 'max:100|nullable',
-            "social_phone" => 'max:100|nullable',
-            "social_twitter" => 'max:100|nullable',
-            "social_youtube" => 'max:100|nullable',
+            'name' => 'max:160|nullable',
+            'logo_url' => 'max:160|nullable',
+            'meta_description' => 'max:160|nullable',
+            'email' => 'email|max:160|nullable',
+            'google_ads_client' => 'max:40|nullable',
+            'google_ads_slot' => 'max:20|nullable',
+            'tracking_id' => 'max:20|nullable',
+            'social_bandcamp' => 'max:100|nullable',
+            'social_email' => 'email|max:100|nullable',
+            'social_facebook' => 'max:100|nullable',
+            'social_houzz' => 'max:100|nullable',
+            'social_instagram' => 'max:100|nullable',
+            'social_linkedin' => 'max:100|nullable',
+            'social_pinterest' => 'max:100|nullable',
+            'social_phone' => 'max:100|nullable',
+            'social_twitter' => 'max:100|nullable',
+            'social_youtube' => 'max:100|nullable',
         ]);
 
         $settings = Settings::find(1);
 
-        if (!$settings) {
-            $settings = new Settings();
+        if (! $settings) {
+            $settings = new Settings;
             $settings->save();
         }
         Log::info($request);

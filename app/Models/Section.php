@@ -11,21 +11,23 @@ class Section extends Model
 
     public static function getAllRaw($pageID = null)
     {
-        if (!$pageID) {
+        if (! $pageID) {
             return Section::all();
         }
+
         return Section::where('page_id', $pageID)->orderBy('weight', 'ASC')->get();
     }
 
     public static function getAll($pageID = null)
     {
 
-        $sections = array();
+        $sections = [];
         $sectionData = Section::getAllRaw($pageID);
 
         foreach ($sectionData as $section) {
             if ($section->type !== 'slideshow') {
                 $sections[] = $section;
+
                 continue;
             }
 
@@ -69,7 +71,7 @@ class Section extends Model
     public static function moveUp($id)
     {
         $section = Section::find($id);
-        if (!$section) {
+        if (! $section) {
             return; // TODO
         }
 
@@ -79,7 +81,7 @@ class Section extends Model
         if (isset($sections[$section->weight - 1])) {
             $previousSection = $sections[$section->weight - 1];
         }
-        if (!$previousSection) {
+        if (! $previousSection) {
             return;
         }
 
@@ -93,7 +95,7 @@ class Section extends Model
     public static function moveDown($id)
     {
         $section = Section::find($id);
-        if (!$section) {
+        if (! $section) {
             return; // TODO
         }
 
@@ -103,7 +105,7 @@ class Section extends Model
         if (isset($sections[$section->weight + 1])) {
             $nextSection = $sections[$section->weight + 1];
         }
-        if (!$nextSection) {
+        if (! $nextSection) {
             return;
         }
 
@@ -117,7 +119,7 @@ class Section extends Model
     public static function deleteAndShift($id)
     {
         $section = Section::find($id);
-        if (!$section) {
+        if (! $section) {
             return; // TODO
         }
 
@@ -128,7 +130,7 @@ class Section extends Model
         while ($i < $count) {
             $sections[$i]->weight -= 1;
             $sections[$i]->save();
-            ++$i;
+            $i++;
         }
 
         $section->delete();

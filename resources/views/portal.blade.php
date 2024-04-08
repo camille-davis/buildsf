@@ -28,11 +28,11 @@
 
   </head>
 
-  <body class="portal {{ isset($classes) ? $classes : ''  }}">
+  <body class="portal {{ isset($classes) ? $classes : '' }}">
 
     <main>
         <div class="sheet">
-            @yield ('content')
+            @yield('content')
         </div>
     </main>
 

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Review;
 use App\Models\Section;
 use App\Models\Settings;
-use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Stevebauman\Purify\Facades\Purify;
-use Mail;
 
 class WebController extends Controller
 {
@@ -25,35 +25,35 @@ class WebController extends Controller
     public function contactUs(Request $request)
     {
 
-        if (!config('services.recaptcha.key')) {
-            $this->validate($request, [
+        if (! config('services.recaptcha.key')) {
+            request()->validate($request, [
                 'name' => 'max:205',
                 'email' => 'required|email|max:205',
                 'subject' => 'max:205',
                 'body' => 'required|max:10000',
             ]);
         } else {
-            $this->validate($request, [
+            request()->validate($request, [
                 'name' => 'max:205',
                 'email' => 'required|email|max:205',
                 'subject' => 'max:205',
                 'body' => 'required|max:10000',
-                'g-recaptcha-response' => 'required|recaptcha'
+                'g-recaptcha-response' => 'required|recaptcha',
             ]);
         }
 
-        if (!$this->settings || !$this->settings->email) {
+        if (! $this->settings || ! $this->settings->email) {
             return redirect('/')->withErrors(['email' => 'No contact email has been set.']);
         }
 
         Mail::send(
             'message',
-            array(
+            [
                 'name' => Purify::clean(request('name')),
                 'email' => Purify::clean(request('email')),
                 'subject' => Purify::clean(request('subject')),
-                'body' => Purify::clean(request('body'))
-            ),
+                'body' => Purify::clean(request('body')),
+            ],
             function ($message) {
                 $message->from('subtle.noreply@gmail.com');
                 $message->to($this->settings->email)
@@ -68,16 +68,16 @@ class WebController extends Controller
     public function submitReview(Request $request)
     {
 
-        if (!config('services.recaptcha.key')) {
-            $this->validate($request, [
+        if (! config('services.recaptcha.key')) {
+            request()->validate($request, [
                 'name' => 'required|max:205',
                 'review' => 'required|max:10000',
             ]);
         } else {
-            $this->validate($request, [
+            request()->validate($request, [
                 'name' => 'required|max:205',
                 'review' => 'required|max:10000',
-                'g-recaptcha-response' => 'required|recaptcha'
+                'g-recaptcha-response' => 'required|recaptcha',
             ]);
         }
 
@@ -98,12 +98,12 @@ class WebController extends Controller
 
         Mail::send(
             'submission',
-            array(
+            [
                 'id' => $id,
                 'name' => $name,
                 'review' => $review,
                 'domain' => $this->domain,
-            ),
+            ],
             function ($message) {
                 $message->from('subtle.noreply@gmail.com');
                 $message->to($this->settings->email)->subject('New Review Submission via ' . $this->domain);
@@ -111,9 +111,9 @@ class WebController extends Controller
         );
 
         Review::create([
-                'id' => $id,
-                'name' => $name,
-                'review' => $review,
+            'id' => $id,
+            'name' => $name,
+            'review' => $review,
         ]);
 
         return redirect('/')->with('success', 'Your review is pending approval.');

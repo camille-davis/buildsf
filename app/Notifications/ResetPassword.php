@@ -2,9 +2,9 @@
 
 namespace App\Notifications;
 
+use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Support\Facades\Lang;
 
 class ResetPassword extends ResetPasswordNotification
@@ -17,7 +17,6 @@ class ResetPassword extends ResetPasswordNotification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-
     public function toMail($notifiable)
     {
         if (static::$toMailCallback) {
@@ -33,7 +32,7 @@ class ResetPassword extends ResetPasswordNotification
             ], false));
         }
 
-        return (new MailMessage())
+        return (new MailMessage)
             ->view('plaintext_email')
             ->subject(Lang::get('Reset Password Notification'))
             ->line(Lang::get('You are receiving this email because we received a password reset request for your account.'))

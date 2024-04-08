@@ -10,9 +10,10 @@ class Block extends Model
 
     public static function getAllInLocation($location = null)
     {
-        if (!$location) {
+        if (! $location) {
             return Block::all();
         }
+
         return Block::where('location', $location)->orderBy('weight', 'ASC')->get();
     }
 
@@ -42,7 +43,7 @@ class Block extends Model
     public static function moveUp($id)
     {
         $section = Section::find($id);
-        if (!$section) {
+        if (! $section) {
             return; // TODO
         }
 
@@ -52,7 +53,7 @@ class Block extends Model
         if (isset($sections[$section->weight - 1])) {
             $previousSection = $sections[$section->weight - 1];
         }
-        if (!$previousSection) {
+        if (! $previousSection) {
             return;
         }
 
@@ -66,7 +67,7 @@ class Block extends Model
     public static function moveDown($id)
     {
         $section = Section::find($id);
-        if (!$section) {
+        if (! $section) {
             return; // TODO
         }
 
@@ -76,7 +77,7 @@ class Block extends Model
         if (isset($sections[$section->weight + 1])) {
             $nextSection = $sections[$section->weight + 1];
         }
-        if (!$nextSection) {
+        if (! $nextSection) {
             return;
         }
 
@@ -90,7 +91,7 @@ class Block extends Model
     public static function deleteAndShift($id)
     {
         $block = Block::find($id);
-        if (!$block) {
+        if (! $block) {
             return; // TODO
         }
 
@@ -101,7 +102,7 @@ class Block extends Model
         while ($i < $count) {
             $blocks[$i]->weight -= 1;
             $blocks[$i]->save();
-            ++$i;
+            $i++;
         }
 
         $block->delete();

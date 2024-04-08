@@ -1,4 +1,4 @@
-<div class="section {{ $section->type ?? '' }} @auth editing @endauth container" id="section-{{ $section->id ?? ''  }}" type="{{ $section->type ?? '' }}">
+<div class="section {{ $section->type ?? '' }} @auth editing @endauth container" id="section-{{ $section->id ?? '' }}" type="{{ $section->type ?? '' }}">
 
     <div class="target" id="{{ $section->slug ?? '' }}"></div>
 
@@ -28,14 +28,14 @@
             <div>
                 <label for="type">Section type:</label>
                 <select name="type">
-                    <option value="basic" {{ $section->type === 'basic' ? 'selected' : '' }}>Basic</option> 
-                    <option value="sheet" {{ $section->type === 'sheet' ? 'selected' : '' }}>Sheet</option> 
-                    <option value="contact" {{ $section->type === 'contact' ? 'selected' : '' }}>Contact</option> 
-                    <option value="feature" {{ $section->type === 'feature' ? 'selected' : '' }}>Feature</option> 
-                    <option value="projects" {{ $section->type === 'projects' ? 'selected' : '' }}>Projects</option> 
-                    <option value="reviews" {{ $section->type === 'reviews' ? 'selected' : '' }}>Reviews</option> 
-                    <option value="slideshow" {{ $section->type === 'slideshow' ? 'selected' : '' }}>Slideshow</option> 
-                    <option value="twitter_feed" {{ $section->type === 'twitter_feed' ? 'selected' : '' }}>Twitter Feed</option> 
+                    <option value="basic" {{ $section->type === 'basic' ? 'selected' : '' }}>Basic</option>
+                    <option value="sheet" {{ $section->type === 'sheet' ? 'selected' : '' }}>Sheet</option>
+                    <option value="contact" {{ $section->type === 'contact' ? 'selected' : '' }}>Contact</option>
+                    <option value="feature" {{ $section->type === 'feature' ? 'selected' : '' }}>Feature</option>
+                    <option value="projects" {{ $section->type === 'projects' ? 'selected' : '' }}>Projects</option>
+                    <option value="reviews" {{ $section->type === 'reviews' ? 'selected' : '' }}>Reviews</option>
+                    <option value="slideshow" {{ $section->type === 'slideshow' ? 'selected' : '' }}>Slideshow</option>
+                    <option value="twitter_feed" {{ $section->type === 'twitter_feed' ? 'selected' : '' }}>Twitter Feed</option>
                 </select>
             </div>
 
@@ -64,7 +64,7 @@
     @endauth
 
     <div class="inner">
-    
+
         <div class="content">
 
             @if (isset($section->type) && ($section->type === 'contact' || $section->type === 'sheet'))
@@ -73,7 +73,7 @@
 
             <h2 class="title section-title">{{ $section->title ?? '' }}</h2>
 
-            <div class="body {{ (isset($section->collapsible_body) && $section->collapsible_body == 1) ? 'collapsible' : ''}}">
+            <div class="body {{ (isset($section->collapsible_body) && $section->collapsible_body == 1) ? 'collapsible' : '' }}">
                 <div class="inside">
                     @if (Auth::check())
                     <div id="section-{{ $section->id ?? '' }}-pell" class="pell-editor"></div>

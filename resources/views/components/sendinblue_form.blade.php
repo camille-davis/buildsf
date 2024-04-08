@@ -71,7 +71,7 @@
 
             <input type="text" name="email_address_check" value="" class="input--hidden">
             <input type="hidden" name="locale" value="en">
-            
+
         </form>
     </div>
 </div>

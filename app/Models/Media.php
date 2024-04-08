@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Stevebauman\Purify\Facades\Purify;
-use App\Models\Media;
 use Illuminate\Database\Eloquent\Model;
+use Stevebauman\Purify\Facades\Purify;
 
 class Media extends Model
 {
@@ -47,6 +46,7 @@ class Media extends Model
         foreach ($ids as $id) {
             $collection[] = Media::find($id);
         }
+
         return $collection;
     }
 
@@ -60,7 +60,7 @@ class Media extends Model
         while ($i < $count) {
             $mediaInProject[$i]->weight -= 1;
             $mediaInProject[$i]->save();
-            ++$i;
+            $i++;
         }
 
         $media->delete();

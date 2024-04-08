@@ -16,7 +16,7 @@
             <button class="save" type="submit" title="save">
                 <i class="fas fa-check"></i>
             </button>
-            
+
             <input name="keys" type="text" value="@foreach ($blocks as $block){{ $block->id }} @endforeach" />
 
             @foreach ($blocks as $block)

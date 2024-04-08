@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Page;
 use App\Models\Block;
+use App\Models\Page;
 use App\Models\Settings;
 use Illuminate\Http\Request;
 use Stevebauman\Purify\Facades\Purify;
@@ -29,7 +29,7 @@ class BlockController extends Controller
         if ($request->current_page != '') {
             $page = Page::find($request->current_page);
         }
-        if (!$page) {
+        if (! $page) {
             $redirect = '/#footer';
         } else {
             $redirect = '/' . $page->slug . '#footer';
@@ -49,11 +49,11 @@ class BlockController extends Controller
             'body[*]' => 'max:10000|nullable',
         ]);
 
-        $keys = explode(" ", $request->input('keys'));
+        $keys = explode(' ', $request->input('keys'));
 
         foreach ($keys as $id) {
             $block = Block::find($id);
-            if (!$block) {
+            if (! $block) {
                 abort(404); // TODO
             }
 
@@ -62,13 +62,14 @@ class BlockController extends Controller
 
             $block->update([
                 'type' => Purify::clean($request->input($type_key)),
-                'body' => Purify::clean($request->input($body_key))
+                'body' => Purify::clean($request->input($body_key)),
             ]);
         }
 
         if ($request->header('Content-Type') !== 'application/json') {
             // TODO
         }
+
         return response()->json(['success' => 'success'], 200);
     }
 
@@ -79,6 +80,7 @@ class BlockController extends Controller
         if ($request->header('Content-Type') !== 'application/json') {
             // TODO
         }
+
         return response()->json(['success' => 'success'], 200);
     }
 
@@ -89,6 +91,7 @@ class BlockController extends Controller
         if ($request->header('Content-Type') !== 'application/json') {
             // TODO
         }
+
         return response()->json(['success' => 'success'], 200);
     }
 
@@ -104,7 +107,7 @@ class BlockController extends Controller
         if ($request->current_page != '') {
             $page = Page::find($request->current_page);
         }
-        if (!isset($page) || !$page) {
+        if (! isset($page) || ! $page) {
             $redirect = '/#footer';
         } else {
             $redirect = '/' . $page->slug . '#footer';

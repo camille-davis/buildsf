@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     protected $fillable = [
-        'id', 'name', 'review', 'approved'
+        'id', 'name', 'review', 'approved',
     ];
 }

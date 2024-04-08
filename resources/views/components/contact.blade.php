@@ -6,9 +6,9 @@
     <input name="subject" type="text" maxlength="205" placeholder="Subject">
     <textarea name="body" maxlength="10000" placeholder="Message" required></textarea>
 
-    @if(config('services.recaptcha.key'))
+    @if (config('services.recaptcha.key'))
         <div style="margin: auto;" class="g-recaptcha"
-            data-sitekey="{{config('services.recaptcha.key')}}">
+            data-sitekey="{{ config('services.recaptcha.key') }}">
         </div>
         <script>
             addCaptchaError(document.getElementById('contact-form'));

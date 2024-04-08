@@ -3,7 +3,7 @@
     @auth
     <div class="actions">
 
-        <form method="POST" action="/admin/page/weights" class="update-menu-weights"> 
+        <form method="POST" action="/admin/page/weights" class="update-menu-weights">
             @csrf
             @method('PATCH')
 
@@ -29,7 +29,7 @@
                 {{ $settings->name ?? '' }}
                 @endif
             </a>
-        </h1> 
+        </h1>
 
         <div id="toggle">
             <button class="hamburger hamburger--squeeze" type="button">
@@ -65,7 +65,7 @@
         </ul><!-- end #links -->
 
         <ul id="social">
-            
+
             @if ($settings->show_social_in_nav == 1)
 
                 @if ($settings->social_bandcamp != '')

@@ -20,9 +20,9 @@
 		<label for="password" class="col-md-4 col-form-label text-md-right" style="display:none;">{{ __('Password') }}</label>
 		<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="password" value="" required autocomplete="current-password">
 
-    @if(config('services.recaptcha.key'))
+    @if (config('services.recaptcha.key'))
         <div style="margin: auto;" class="g-recaptcha"
-            data-sitekey="{{config('services.recaptcha.key')}}">
+            data-sitekey="{{ config('services.recaptcha.key') }}">
         </div>
         <script>
             addCaptchaError(document.getElementById('login-form'));

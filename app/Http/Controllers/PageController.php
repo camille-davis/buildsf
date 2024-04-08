@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Page;
 use App\Models\Block;
+use App\Models\Page;
 use App\Models\Project;
+use App\Models\Review;
 use App\Models\Section;
 use App\Models\Settings;
-use App\Models\Review;
 use Illuminate\Http\Request;
 use Stevebauman\Purify\Facades\Purify;
 
@@ -21,9 +21,16 @@ class PageController extends Controller
         $this->projects = Project::getAll();
     }
 
+    public function create()
+    {
+        $page = Page::createBlank();
+
+        return redirect('/' . $page->slug);
+    }
+
     public function show($slug = null)
     {
-        if (!$slug) {
+        if (! $slug) {
             $page = Page::where('homepage', 1)->first();
         } else {
             $page = Page::where('slug', $slug)->first();
@@ -44,7 +51,7 @@ class PageController extends Controller
 
         $footerBlocks = Block::where('location', 'footer')->orderBy('weight', 'ASC')->get();
 
-        $data = array(
+        $data = [
             'navLinks' => $navLinks,
             'page' => $page,
             'sections' => $sections,
@@ -52,16 +59,9 @@ class PageController extends Controller
             'settings' => $this->settings,
             'reviews' => $this->reviews,
             'projects' => $this->projects,
-        );
+        ];
 
         return view('page', $data);
-    }
-
-    public function create()
-    {
-        $page = Page::createBlank();
-
-        return redirect('/' . $page->slug);
     }
 
     public function update(Request $request, $id)
@@ -73,7 +73,7 @@ class PageController extends Controller
         ]);
 
         $page = Page::find($id);
-        if (!$page) {
+        if (! $page) {
             abort(404); // TODO
         }
 
@@ -92,6 +92,7 @@ class PageController extends Controller
         if ($request->header('Content-Type') !== 'application/json') {
             return; // TODO
         }
+
         return response()->json(['success' => 'success'], 200);
     }
 
@@ -102,6 +103,7 @@ class PageController extends Controller
         if ($request->header('Content-Type') !== 'application/json') {
             return; // TODO
         }
+
         return response()->json(['success' => 'success'], 200);
     }
 

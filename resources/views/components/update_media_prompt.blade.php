@@ -22,7 +22,7 @@
             @endif
 
             <button type="submit" class="save">Save</button>
-            
+
         </form>
     </div>
 </div><!-- end #update-media -->

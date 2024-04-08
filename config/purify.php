@@ -70,7 +70,7 @@ return [
         'HTML.Allowed' => 'h1,h2,h3,h4,h5,h6,b,strong,i,em,a[href|title|class|target],ul,ol,li,p[class],img[class|alt|src],iframe[src],br',
         'Attr.AllowedFrameTargets' => ['_blank'],
 
-        'HTML.SafeIframe'  => true,
+        'HTML.SafeIframe' => true,
         'URI.SafeIframeRegexp' => '%^(http://|https://|//)(www.youtube.com/embed/|player.vimeo.com/video/)%',
 
         /*

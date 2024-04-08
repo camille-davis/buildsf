@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use App\Models\Section;
 
 class Page extends Model
 {
@@ -18,7 +17,7 @@ class Page extends Model
 
     public static function createBlank()
     {
-        $page = new Page();
+        $page = new Page;
 
         $pages = Page::orderBy('weight', 'ASC')->get();
         $count = count($pages);
@@ -43,7 +42,7 @@ class Page extends Model
         $ids = explode(' ', $stringIDs);
         foreach ($ids as $key => $id) {
             $page = Page::find($id);
-            if (!$page) {
+            if (! $page) {
                 continue;
             }
             $page->weight = $key;
@@ -54,7 +53,7 @@ class Page extends Model
     public static function deleteAndShift($id)
     {
         $page = Page::find($id);
-        if (!$page) {
+        if (! $page) {
             return; // TODO
         }
 
@@ -65,7 +64,7 @@ class Page extends Model
         while ($i < $count) {
             $pages[$i]->weight -= 1;
             $pages[$i]->save();
-            ++$i;
+            $i++;
         }
 
         $page->delete();

@@ -5,7 +5,7 @@
         <div class="input-with-button">
             <input type="file" name="file[]" multiple />
             <button type="submit">Upload</button>
-        </div>  
+        </div>
     </div>
     @if (isset($id))
         <input type="number" name="project_id" placeholder="Project ID#" value="{{ $id }}" readonly />

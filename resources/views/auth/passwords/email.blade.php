@@ -22,9 +22,9 @@
 		<label for="email" class="col-md-4 col-form-label text-md-right" style="display:none;">{{ __('E-Mail Address') }}</label>
 		<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="email" value="" required autocomplete="email" autofocus>
 
-	@if(config('services.recaptcha.key'))
+	@if (config('services.recaptcha.key'))
 		<div class="g-recaptcha"
-			data-sitekey="{{config('services.recaptcha.key')}}">
+			data-sitekey="{{ config('services.recaptcha.key') }}">
 		</div>
         <script>
             addCaptchaError(document.getElementById('password-form'));
