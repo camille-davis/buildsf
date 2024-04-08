@@ -1,10 +1,10 @@
 <ul class="gallery">
-	@foreach ($media as $item)
-	<li>
-		<a class="media-link" href="/storage/media/{{ $item->filename ?? '' }}" title="View full size">
+    @foreach ($media as $item)
+    <li>
+        <a class="media-link" href="/storage/media/{{ $item->filename ?? '' }}" title="View full size">
             <?php $rawFilename = explode('.', $item->filename) ?>
-			<img id="image-{{ $item->id ?? '' }}-thumb" src="/storage/media/{{ $rawFilename[0] . '_thumb.' . $rawFilename[1] ?? '' }}" alt="{{ $item->alt ?? ''}}" project_id="{{ $item->project_id ?? '' }}" />
-		</a>
+            <img id="image-{{ $item->id ?? '' }}-thumb" src="/storage/media/{{ $rawFilename[0] . '_thumb.' . $rawFilename[1] ?? '' }}" alt="{{ $item->alt ?? ''}}" project_id="{{ $item->project_id ?? '' }}" />
+        </a>
         @auth
         <div class="actions">
             <form class="delete-media" method="POST" action="/admin/media/{{ $item->id }}">
@@ -22,6 +22,6 @@
             </a>
         </div>
         @endauth
-	</li>
-	@endforeach
+    </li>
+    @endforeach
 </ul>

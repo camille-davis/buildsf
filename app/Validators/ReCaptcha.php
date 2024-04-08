@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Validators;
+
 use GuzzleHttp\Client;
+
 class ReCaptcha
 {
     public function validate($attribute, $value, $parameters, $validator)
     {
-        $client = new Client;
+        $client = new Client();
         $response = $client->post(
             'https://www.google.com/recaptcha/api/siteverify',
             [

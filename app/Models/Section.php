@@ -3,12 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Settings;
 use Illuminate\Support\Str;
 
 class Section extends Model
 {
-
     protected $fillable = ['slug', 'type', 'title', 'body', 'image_ids'];
 
     public static function getAllRaw($pageID = null)
@@ -26,7 +24,6 @@ class Section extends Model
         $sectionData = Section::getAllRaw($pageID);
 
         foreach ($sectionData as $section) {
-
             if ($section->type !== 'slideshow') {
                 $sections[] = $section;
                 continue;
@@ -41,7 +38,6 @@ class Section extends Model
         }
 
         return $sections;
-
     }
 
     public static function createBlank($pageID)
@@ -64,7 +60,7 @@ class Section extends Model
         } else {
             $section->weight = 0;
         }
-        
+
         $section->save();
 
         return $section;
@@ -86,7 +82,7 @@ class Section extends Model
         if (!$previousSection) {
             return;
         }
-        
+
         $section->weight -= 1;
         $section->save();
 
@@ -124,7 +120,7 @@ class Section extends Model
         if (!$section) {
             return; // TODO
         }
-  
+
         $sections = Section::getAllRaw($section->page_id);
 
         $i = $section->weight + 1;
@@ -137,5 +133,4 @@ class Section extends Model
 
         $section->delete();
     }
-
 }

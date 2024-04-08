@@ -3,31 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Page;
-use App\Models\Block;
 use App\Models\Project;
 use App\Models\Section;
 use App\Models\Settings;
 use App\Models\Review;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Collection;
 use Stevebauman\Purify\Facades\Purify;
 
 class SectionController extends Controller
 {
+    public function __construct()
+    {
+        $this->settings = Settings::find(1);
+        $this->reviews = Review::where('approved', true)->orderBy('created_at', 'desc')->get();
 
-	public function __construct()
-	{
-		$this->settings = Settings::find(1);
-		$this->reviews = Review::where('approved', true)->orderBy('created_at','desc')->get();
-		
         $this->projects = Project::getAll();
 
         $url = config('app.url');
         $this->domain = preg_replace('/https?:\/\//i', '', $url);
-	}
+    }
 
     public function create(Request $request)
     {
@@ -46,8 +40,8 @@ class SectionController extends Controller
         // TODO if json
     }
 
-	public function update(Request $request, $id)
-	{
+    public function update(Request $request, $id)
+    {
         $request->validate([
             'title' => 'max:120|nullable',
             'slug' => 'max:50|nullable',
@@ -75,34 +69,33 @@ class SectionController extends Controller
         return response()->json(['success' => 'success'], 200);
     }
 
-	public function moveDown(Request $request, $id)
-	{
+    public function moveDown(Request $request, $id)
+    {
         Section::moveDown($id);
 
         if ($request->header('Content-Type') !== 'application/json') {
             // TODO
         }
         return response()->json(['success' => 'success'], 200);
-	}
+    }
 
-	public function moveUp(Request $request, $id)
-	{
+    public function moveUp(Request $request, $id)
+    {
         Section::moveUp($id);
 
         if ($request->header('Content-Type') !== 'application/json') {
             // TODO
         }
         return response()->json(['success' => 'success'], 200);
-	}
+    }
 
-	public function discard(Request $request, $id)
-	{
+    public function discard(Request $request, $id)
+    {
         Section::deleteAndShift($id);
 
         if ($request->header('Content-Type') === 'application/json') {
             return response()->json(['success' => 'success'], 200);
         }
         return redirect('/');
-	}
-
+    }
 }

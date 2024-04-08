@@ -5,20 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 use App\Models\Block;
 use App\Models\Settings;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Collection;
 use Stevebauman\Purify\Facades\Purify;
 
 class BlockController extends Controller
 {
-
-	public function __construct()
-	{
-		$this->settings = Settings::find(1);
-	}
+    public function __construct()
+    {
+        $this->settings = Settings::find(1);
+    }
 
     public function create(Request $request)
     {
@@ -39,15 +34,15 @@ class BlockController extends Controller
         } else {
             $redirect = '/' . $page->slug . '#footer';
         }
-        
+
         if ($request->header('Content-Type') !== 'application/json') {
             return redirect($redirect);
         }
         // TODO if json
     }
 
-	public function updateMultiple(Request $request)
-	{
+    public function updateMultiple(Request $request)
+    {
 
         $request->validate([
             'type[*]' => 'max:120|nullable',
@@ -57,7 +52,6 @@ class BlockController extends Controller
         $keys = explode(" ", $request->input('keys'));
 
         foreach ($keys as $id) {
-
             $block = Block::find($id);
             if (!$block) {
                 abort(404); // TODO
@@ -70,7 +64,6 @@ class BlockController extends Controller
                 'type' => Purify::clean($request->input($type_key)),
                 'body' => Purify::clean($request->input($body_key))
             ]);
-
         }
 
         if ($request->header('Content-Type') !== 'application/json') {
@@ -79,28 +72,28 @@ class BlockController extends Controller
         return response()->json(['success' => 'success'], 200);
     }
 
-	public function moveDown(Request $request, $id)
-	{
+    public function moveDown(Request $request, $id)
+    {
         Section::moveDown($id);
 
         if ($request->header('Content-Type') !== 'application/json') {
             // TODO
         }
         return response()->json(['success' => 'success'], 200);
-	}
+    }
 
-	public function moveUp(Request $request, $id)
-	{
+    public function moveUp(Request $request, $id)
+    {
         Section::moveUp($id);
 
         if ($request->header('Content-Type') !== 'application/json') {
             // TODO
         }
         return response()->json(['success' => 'success'], 200);
-	}
+    }
 
-	public function discard(Request $request, $id)
-	{
+    public function discard(Request $request, $id)
+    {
 
         $request->validate([
             'current_page' => 'numeric|nullable',
@@ -116,13 +109,11 @@ class BlockController extends Controller
         } else {
             $redirect = '/' . $page->slug . '#footer';
         }
-        
+
         if ($request->header('Content-Type') !== 'application/json') {
             return redirect($redirect);
         }
 
         return response()->json(['success' => 'success'], 200);
-
-	}
-
+    }
 }

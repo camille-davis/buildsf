@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Settings extends Model
 {
-
-	protected $fillable = [
-        'name', 
-        'email', 
-        'logo_url', 
+    protected $fillable = [
+        'name',
+        'email',
+        'logo_url',
         'meta_description',
         'google_ads_client',
         'google_ads_slot',
@@ -26,5 +25,4 @@ class Settings extends Model
         'social_twitter',
         'social_youtube',
     ];
-
 }

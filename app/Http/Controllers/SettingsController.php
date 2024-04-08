@@ -9,12 +9,10 @@ use Stevebauman\Purify\Facades\Purify;
 
 class SettingsController extends Controller
 {
-    
     public function __construct()
     {
-    
-        $this->settings = Settings::find(1);
 
+        $this->settings = Settings::find(1);
     }
 
     public function showSettingsForm()
@@ -46,11 +44,11 @@ class SettingsController extends Controller
             "social_twitter" => 'max:100|nullable',
             "social_youtube" => 'max:100|nullable',
         ]);
-			
+
         $settings = Settings::find(1);
 
         if (!$settings) {
-            $settings = new Settings;
+            $settings = new Settings();
             $settings->save();
         }
         Log::info($request);

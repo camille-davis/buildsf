@@ -13,32 +13,31 @@ use App\Models\Settings;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['middleware' => 'throttle:100,1'], function ()
-{
+Route::group(['middleware' => 'throttle:100,1'], function () {
 
     $settings = Settings::find(1);
 
-	Auth::routes(['register' => false]);
+    Auth::routes(['register' => false]);
 
-	Route::group(['middleware' => 'auth'], function() {
+    Route::group(['middleware' => 'auth'], function () {
 
-		Route::post('/admin/page', '\App\Http\Controllers\PageController@create');
-		Route::put('/admin/page/{id}', '\App\Http\Controllers\PageController@update');
-		Route::patch('/admin/page/weights', '\App\Http\Controllers\PageController@updateWeights');
+        Route::post('/admin/page', '\App\Http\Controllers\PageController@create');
+        Route::put('/admin/page/{id}', '\App\Http\Controllers\PageController@update');
+        Route::patch('/admin/page/weights', '\App\Http\Controllers\PageController@updateWeights');
         Route::delete('/admin/page/{id}', '\App\Http\Controllers\PageController@discard');
 
-		Route::post('/admin/project', '\App\Http\Controllers\ProjectController@create');
-		Route::put('/admin/project/{id}', '\App\Http\Controllers\ProjectController@update');
+        Route::post('/admin/project', '\App\Http\Controllers\ProjectController@create');
+        Route::put('/admin/project/{id}', '\App\Http\Controllers\ProjectController@update');
         Route::delete('/admin/project/{id}', '\App\Http\Controllers\ProjectController@discard');
 
-		Route::patch('/admin/projects/weights', '\App\Http\Controllers\ProjectController@updateWeights');
+        Route::patch('/admin/projects/weights', '\App\Http\Controllers\ProjectController@updateWeights');
 
-		Route::post('/admin/block', '\App\Http\Controllers\BlockController@create');
-		Route::put('/admin/blocks', '\App\Http\Controllers\BlockController@updateMultiple');
+        Route::post('/admin/block', '\App\Http\Controllers\BlockController@create');
+        Route::put('/admin/blocks', '\App\Http\Controllers\BlockController@updateMultiple');
         Route::delete('/admin/block/{id}', '\App\Http\Controllers\BlockController@discard');
 
-		Route::post('/admin/section', '\App\Http\Controllers\SectionController@create');
-		Route::put('/admin/section/{id}', '\App\Http\Controllers\SectionController@update');
+        Route::post('/admin/section', '\App\Http\Controllers\SectionController@create');
+        Route::put('/admin/section/{id}', '\App\Http\Controllers\SectionController@update');
         Route::delete('/admin/section/{id}', '\App\Http\Controllers\SectionController@discard');
         Route::patch('/admin/section/{id}/up', '\App\Http\Controllers\SectionController@moveUp');
         Route::patch('/admin/section/{id}/down', '\App\Http\Controllers\SectionController@moveDown');
@@ -56,11 +55,10 @@ Route::group(['middleware' => 'throttle:100,1'], function ()
 
         Route::get('/admin/user', '\App\Http\Controllers\UserController@showForm');
         Route::put('/admin/user', '\App\Http\Controllers\UserController@update');
+    });
 
-	});
-
-	Route::post('/contact', '\App\Http\Controllers\WebController@contactUs');
-	Route::post('/review', '\App\Http\Controllers\WebController@submitReview');
+    Route::post('/contact', '\App\Http\Controllers\WebController@contactUs');
+    Route::post('/review', '\App\Http\Controllers\WebController@submitReview');
 
     Route::get('/review/approve/{id}', '\App\Http\Controllers\WebController@approveReview');
     Route::get('/review/discard/{id}', '\App\Http\Controllers\WebController@discardReview');

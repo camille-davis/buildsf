@@ -5,18 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Media;
 use App\Models\Project;
 use App\Models\Settings;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
-use Stevebauman\Purify\Facades\Purify;
 use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller
 {
-    
     public function __construct()
     {
         $this->media = Media::orderBy('created_at', 'desc')->get();
-		$this->settings = Settings::find(1);
+        $this->settings = Settings::find(1);
     }
 
     public function showMediaForm()
@@ -28,25 +25,25 @@ class MediaController extends Controller
         ]);
     }
 
-	public function getMediaData($stringIDs = null)
+    public function getMediaData($stringIDs = null)
     {
         if (!$stringIDs) {
-            return $this->media; 
+            return $this->media;
         }
 
         $ids = explode(' ', $stringIDs);
         $media = Media::findManyInOrder($ids);
-        return $media; 
+        return $media;
     }
 
-	public function getProjectMediaData($projectID)
+    public function getProjectMediaData($projectID)
     {
-       $media = Media::where('project_id', $projectID)->get();
-       return $media; 
+        $media = Media::where('project_id', $projectID)->get();
+        return $media;
     }
 
-	public function uploadMedia(Request $request)
-	{
+    public function uploadMedia(Request $request)
+    {
 
         $request->validate([
             'file.*' => 'required|image|mimes:jpeg,png|max:2000',
@@ -55,25 +52,22 @@ class MediaController extends Controller
 
         $projectID = $request->input('project_id');
         $project = Project::find($projectID);
-        
+
         $files = $request->file('file');
 
         if ($request->hasFile('file')) {
-        
             foreach ($files as $file) {
-
                 $rawFilename = uniqid();
 
                 $mime = $file->getMimeType();
                 if ($mime == 'image/png') {
-
                     $filename = $rawFilename . '.png';
                     $img = imageCreateFromPng($file);
 
                     imageAlphaBlending($img, true);
                     imageSaveAlpha($img, true);
 
-                    imagePng($img , storage_path('app/public/media/' . $filename));
+                    imagePng($img, storage_path('app/public/media/' . $filename));
 
                     $width = imagesx($img);
                     $height = imagesy($img);
@@ -84,20 +78,18 @@ class MediaController extends Controller
 
                         $newImage = imagecreatetruecolor($newWidth, $newHeight);
                         imagealphablending($newImage, false);
-                        imagesavealpha($newImage,true); 
+                        imagesavealpha($newImage, true);
                         imagecopyresampled($newImage, $img, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
 
                         $thumb = $newImage;
                     } else {
                         $thumb = $img;
                     }
-                    imagePng($thumb , storage_path('app/public/media/' . $rawFilename . '_thumb.png'));
-
+                    imagePng($thumb, storage_path('app/public/media/' . $rawFilename . '_thumb.png'));
                 } else {
-
                     $filename = $rawFilename . '.jpg';
                     $img = imageCreateFromJpeg($file);
-                    imageJpeg($img , storage_path('app/public/media/' . $filename), 100);
+                    imageJpeg($img, storage_path('app/public/media/' . $filename), 100);
                     $width = imagesx($img);
                     if ($width > 767) {
                         $thumb = imageScale($img, 767);
@@ -105,8 +97,7 @@ class MediaController extends Controller
                         $thumb = $img;
                     }
 
-                    imageJpeg($thumb , storage_path('app/public/media/' . $rawFilename . '_thumb.jpg'), 100);
-
+                    imageJpeg($thumb, storage_path('app/public/media/' . $rawFilename . '_thumb.jpg'), 100);
                 }
                 if (isset($img)) {
                     imageDestroy($img);
@@ -124,9 +115,7 @@ class MediaController extends Controller
                 }
 
                 Media::createInProject($projectID, $filename);
-            
             }
-        
         }
 
         if (!$project) {
@@ -134,11 +123,10 @@ class MediaController extends Controller
         }
 
         return redirect('/project/' . $project->slug);
-
     }
 
-	public function updateMedia(Request $request, $id)
-	{
+    public function updateMedia(Request $request, $id)
+    {
         $request->validate([
             'alt' => 'max:160|nullable',
             'project_id' => 'max:50|nullable',
@@ -148,7 +136,7 @@ class MediaController extends Controller
         if (!$media) {
             abort(404); // TODO
         }
-        
+
         $media->update([
             'alt' => $request->input('alt'),
         ]);
@@ -173,8 +161,8 @@ class MediaController extends Controller
         return response()->json(['success' => 'success'], 200);
     }
 
-	public function deleteMedia(Request $request, $id)
-	{
+    public function deleteMedia(Request $request, $id)
+    {
 
         if ($request->input('current_page')) {
             $currentPage = $request->input('current_page');
@@ -187,7 +175,7 @@ class MediaController extends Controller
         $rawFilename = explode('.', $media->filename);
         Storage::delete('public/media/' . $rawFilename[0] . '_thumb.' . $rawFilename[1]);
 
-        if ($media->project_id == '' ) {
+        if ($media->project_id == '') {
             $media->delete();
             return redirect('/admin/media');
         }
@@ -204,7 +192,5 @@ class MediaController extends Controller
         }
 
         return redirect('/project/' . $project->slug);
-
     }
-
 }

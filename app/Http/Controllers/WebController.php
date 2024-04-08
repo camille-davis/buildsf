@@ -5,35 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Section;
 use App\Models\Settings;
 use App\Models\Review;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\Eloquent\Collection;
 use Stevebauman\Purify\Facades\Purify;
 use Mail;
 
 class WebController extends Controller
 {
-
-	public function __construct()
-	{
-		$this->sections = Section::orderBy('weight', 'ASC')->get();
-
-		$this->reviews = Review::where('approved', true)->orderBy('created_at','desc')->get();
-
-		$this->settings = Settings::find(1);
+    public function __construct()
+    {
+        $this->sections = Section::orderBy('weight', 'ASC')->get();
+        $this->reviews = Review::where('approved', true)->orderBy('created_at', 'desc')->get();
+        $this->settings = Settings::find(1);
 
         $url = config('app.url');
         $this->domain = preg_replace('/https?:\/\//i', '', $url);
+    }
 
-	}
+    public function contactUs(Request $request)
+    {
 
-	public function contactUs (Request $request)
-	{
-
-	    if (!config('services.recaptcha.key')) {
+        if (!config('services.recaptcha.key')) {
             $this->validate($request, [
                 'name' => 'max:205',
                 'email' => 'required|email|max:205',
@@ -54,28 +46,29 @@ class WebController extends Controller
             return redirect('/')->withErrors(['email' => 'No contact email has been set.']);
         }
 
-		Mail::send('message',
-			array(
-				'name' => Purify::clean(request('name')),
-				'email' => Purify::clean(request('email')),
-				'subject' => Purify::clean(request('subject')),
-				'body' => Purify::clean(request('body'))
-			),
-			function($message)
-			{
-				$message->from('subtle.noreply@gmail.com');
-				$message->to($this->settings->email)
+        Mail::send(
+            'message',
+            array(
+                'name' => Purify::clean(request('name')),
+                'email' => Purify::clean(request('email')),
+                'subject' => Purify::clean(request('subject')),
+                'body' => Purify::clean(request('body'))
+            ),
+            function ($message) {
+                $message->from('subtle.noreply@gmail.com');
+                $message->to($this->settings->email)
                     ->replyTo(Purify::clean(request('email')))
-                    ->subject('New Message via ' . $this->domain );
-			});
+                    ->subject('New Message via ' . $this->domain);
+            }
+        );
 
-		return back()->with('success', 'Thanks for contacting us!');
-	}
+        return back()->with('success', 'Thanks for contacting us!');
+    }
 
-	public function submitReview (Request $request)
-	{
+    public function submitReview(Request $request)
+    {
 
-	    if (!config('services.recaptcha.key')) {
+        if (!config('services.recaptcha.key')) {
             $this->validate($request, [
                 'name' => 'required|max:205',
                 'review' => 'required|max:10000',
@@ -101,32 +94,33 @@ class WebController extends Controller
             $review .= $paragraph;
         }
 
-		$id = Str::uuid()->toString();
+        $id = Str::uuid()->toString();
 
-		Mail::send('submission',
-			array(
-				'id' => $id,
-				'name' => $name,
-				'review' => $review,
-				'domain' => $this->domain,
-			),
-			function($message)
-			{
-				$message->from('subtle.noreply@gmail.com');
-				$message->to($this->settings->email)->subject('New Review Submission via ' . $this->domain); // TODO domain name from env, email from env
-			});
+        Mail::send(
+            'submission',
+            array(
+                'id' => $id,
+                'name' => $name,
+                'review' => $review,
+                'domain' => $this->domain,
+            ),
+            function ($message) {
+                $message->from('subtle.noreply@gmail.com');
+                $message->to($this->settings->email)->subject('New Review Submission via ' . $this->domain);
+            }
+        );
 
-		Review::create([
-				'id' => $id,
-				'name' => $name,
-				'review' => $review,
-		]);
+        Review::create([
+                'id' => $id,
+                'name' => $name,
+                'review' => $review,
+        ]);
 
-		return redirect('/')->with('success', 'Your review is pending approval.');
-	}
+        return redirect('/')->with('success', 'Your review is pending approval.');
+    }
 
-	public function approveReview($id)
-	{
+    public function approveReview($id)
+    {
 
         $review = Review::where('id', $id)->first();
 
@@ -136,11 +130,14 @@ class WebController extends Controller
 
         $review->update(['approved' => true]);
 
-		return redirect('/')->with('success', 'The review was successfully approved! To see it, you may need to refresh the page.');
-	}
+        return redirect('/')->with(
+            'success',
+            'The review was successfully approved! To see it, you may need to refresh the page.'
+        );
+    }
 
-	public function discardReview($id)
-	{
+    public function discardReview($id)
+    {
 
         $review = Review::where('id', $id)->first();
 
@@ -150,8 +147,6 @@ class WebController extends Controller
 
         $review->delete();
 
-		return redirect('/')->with('success', 'The review was successfully discarded.');
-
-	}
-
+        return redirect('/')->with('success', 'The review was successfully discarded.');
+    }
 }

@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\Settings;
-use App\Models\User;
-use Stevebauman\Purify\Facades\Purify;
 
 class UserController extends Controller
 {
-    
     public function __construct()
     {
-    
-        $this->settings = Settings::find(1);
 
+        $this->settings = Settings::find(1);
     }
 
     public function showForm()
@@ -36,7 +31,7 @@ class UserController extends Controller
             "name" => 'max:160|required',
             "email" => 'email|max:160|required',
         ]);
-			
+
         $user = Auth::user();
         $data = $request->all();
         $user->update(['name' => $data['name']]);

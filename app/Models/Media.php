@@ -4,9 +4,7 @@ namespace App\Models;
 
 use Stevebauman\Purify\Facades\Purify;
 use App\Models\Media;
-use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
 
 class Media extends Model
 {
@@ -37,11 +35,10 @@ class Media extends Model
         } else {
             $media->weight = 0;
         }
-        
+
         $media->save();
 
         return $media;
-
     }
 
     public static function findManyInOrder($ids)
@@ -68,5 +65,4 @@ class Media extends Model
 
         $media->delete();
     }
-
 }

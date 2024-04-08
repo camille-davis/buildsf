@@ -12,7 +12,7 @@
 
         <a href="/project/{{ $project->slug ?? '' }}" class="project-link" draggable="false">
             @if (isset($project->featured_image_filename))
-			<img class="project-thumbnail" src="{{ $thumbFilename ?? '' }}" alt="" />
+            <img class="project-thumbnail" src="{{ $thumbFilename ?? '' }}" alt="" />
             @endif
             <div class="project-label">{{ $project->title ?? '' }}</div>
         </a>

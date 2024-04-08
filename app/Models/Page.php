@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Models\Section;
-use Illuminate\Support\Facades\Log;
 
 class Page extends Model
 {
-
     protected $fillable = [
         'slug',
         'title',
@@ -20,7 +18,7 @@ class Page extends Model
 
     public static function createBlank()
     {
-        $page = new Page;
+        $page = new Page();
 
         $pages = Page::orderBy('weight', 'ASC')->get();
         $count = count($pages);
@@ -59,7 +57,7 @@ class Page extends Model
         if (!$page) {
             return; // TODO
         }
-  
+
         $pages = Page::orderBy('weight', 'ASC')->get();
 
         $i = $page->weight + 1;
@@ -72,5 +70,4 @@ class Page extends Model
 
         $page->delete();
     }
-
 }

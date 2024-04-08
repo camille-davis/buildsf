@@ -8,29 +8,23 @@ use App\Models\Media;
 use App\Models\Project;
 use App\Models\Section;
 use App\Models\Settings;
-use App\Models\Review;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Collection;
 use Stevebauman\Purify\Facades\Purify;
 
 class ProjectController extends Controller
 {
-
-	public function __construct()
-	{
-		$this->settings = Settings::find(1);
-		$this->pages = Page::orderBy('weight', 'ASC')->get();
-		$this->projects = Project::orderBy('weight', 'ASC')->get();
-		$this->sections = Section::orderBy('weight', 'ASC')->get();
+    public function __construct()
+    {
+        $this->settings = Settings::find(1);
+        $this->pages = Page::orderBy('weight', 'ASC')->get();
+        $this->projects = Project::orderBy('weight', 'ASC')->get();
+        $this->sections = Section::orderBy('weight', 'ASC')->get();
         $url = config('app.url');
         $this->domain = preg_replace('/https?:\/\//i', '', $url);
-	}
+    }
 
-	public function show($slug)
-	{
+    public function show($slug)
+    {
 
         $project = Project::where('slug', $slug)->first();
         if (!$project) {
@@ -51,7 +45,7 @@ class ProjectController extends Controller
             $navLinks = Section::where('page_id', $homepage->id)->orderBy('weight', 'ASC')->get();
         }
 
-		$footerBlocks = Block::where('location', 'footer')->orderBy('weight', 'ASC')->get();
+        $footerBlocks = Block::where('location', 'footer')->orderBy('weight', 'ASC')->get();
 
         $data = array(
             'settings' => $this->settings,
@@ -63,11 +57,10 @@ class ProjectController extends Controller
         );
 
         return view('project', $data);
+    }
 
-	}
-
-	public function showPrev($slug)
-	{
+    public function showPrev($slug)
+    {
         $project = Project::where('slug', $slug)->first();
         if (!$project) {
             abort(404);
@@ -83,8 +76,8 @@ class ProjectController extends Controller
         return redirect('/project/' . $nextProject->slug);
     }
 
-	public function showNext($slug)
-	{
+    public function showNext($slug)
+    {
         $project = Project::where('slug', $slug)->first();
         if (!$project) {
             abort(404);
@@ -107,13 +100,13 @@ class ProjectController extends Controller
         return redirect('/project/' . $project->slug);
     }
 
-	public function update(Request $request, $id)
-	{
+    public function update(Request $request, $id)
+    {
         $request->validate([
-            'title' => 'max:120|nullable', 
-            'meta_description' => 'max:160|nullable', 
-            'body' => 'max:10000|nullable', 
-            'slug' => 'max:50|nullable', 
+            'title' => 'max:120|nullable',
+            'meta_description' => 'max:160|nullable',
+            'body' => 'max:10000|nullable',
+            'slug' => 'max:50|nullable',
             'featured_image_id' => 'max:120|nullable',
         ]);
 
@@ -152,11 +145,10 @@ class ProjectController extends Controller
         return response()->json(['success' => 'success'], 200);
     }
 
-	public function discard(Request $request, $id)
-	{
+    public function discard(Request $request, $id)
+    {
         Project::deleteAndShift($id);
 
         return redirect('/')->with('success', 'The project was successfully deleted.');
-	}
-
+    }
 }

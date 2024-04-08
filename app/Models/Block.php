@@ -3,13 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
-use App\Models\Settings;
-use Illuminate\Support\Str;
 
 class Block extends Model
 {
-
     protected $fillable = ['location', 'type', 'weight', 'body'];
 
     public static function getAllInLocation($location = null)
@@ -37,7 +33,7 @@ class Block extends Model
         } else {
             $block->weight = 0;
         }
-        
+
         $block->save();
 
         return $block;
@@ -59,7 +55,7 @@ class Block extends Model
         if (!$previousSection) {
             return;
         }
-        
+
         $section->weight -= 1;
         $section->save();
 
@@ -97,7 +93,7 @@ class Block extends Model
         if (!$block) {
             return; // TODO
         }
-  
+
         $blocks = Block::getAllInLocation($block->location);
 
         $i = $block->weight + 1;
@@ -110,5 +106,4 @@ class Block extends Model
 
         $block->delete();
     }
-
 }

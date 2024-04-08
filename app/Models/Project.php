@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Models\Media;
-use Illuminate\Support\Facades\Log;
 
 class Project extends Model
 {
@@ -21,7 +19,7 @@ class Project extends Model
 
     public static function createBlank()
     {
-        $project = new Project;
+        $project = new Project();
 
         $projects = Project::orderBy('weight', 'ASC')->get();
         $count = count($projects);
@@ -44,7 +42,6 @@ class Project extends Model
         $projects = array();
         $projectsData = Project::orderBy('weight', 'ASC')->get();
         foreach ($projectsData as $data) {
-
             $project = new \stdClass();
             $project->id = $data->id;
             $project->title = $data->title;
@@ -70,17 +67,15 @@ class Project extends Model
 
     public static function updateWeights($array)
     {
-        
+
         foreach ($array as $key => $value) {
             $project = Project::find($value);
             if (!$project) {
                 continue;
-
             }
             $project->weight = $key;
             $project->save();
         }
-
     }
 
     public static function deleteAndShift($id)
@@ -89,7 +84,7 @@ class Project extends Model
         if (!$project) {
             return; // TODO
         }
-  
+
         $projects = Project::orderBy('weight', 'ASC')->get();
 
         $i = $project->weight + 1;
@@ -108,5 +103,4 @@ class Project extends Model
 
         $project->delete();
     }
-
 }
