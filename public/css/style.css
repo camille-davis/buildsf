@@ -2,18 +2,14 @@
 
 :root {
     --header-font: 'Nunito Sans', sans-serif;
-
     --shade-one: #2f2c2c;
     --shade-two: #2f2c2c;
     --shade-three: #000;
     --shadow-color: transparent;
-
     --link-color: #fff;
     --hover-color: #00E3AA;
-
     --text-one: #eee;
     --text-two: #eee;
-
     --admin-bg: #fff;
     --admin-input: #dedede;
     --admin-text: #333;
@@ -39,6 +35,7 @@ button, .button {
 .inner {
     max-width: none;
 }
+
 .page-20 .section .sheet {
     background-color: #eee;
 }
@@ -48,7 +45,7 @@ button, .button {
     color: #111;
 }
 
-/*.page-18 .content .collapsible .inside {
+/* .page-18 .content .collapsible .inside {
     padding-bottom: 33.33%;
     transition: height .4s;
 }
@@ -111,8 +108,7 @@ footer p:last-of-type {
     display: flex;
 }
 
-@media screen and (max-width: 829px) {
-
+@media screen and (width <= 829px) {
     footer .block {
         width: 100%;
     }
@@ -129,8 +125,7 @@ footer p:last-of-type {
 
 }
 
-@media screen and (min-width: 830px) {
-
+@media screen and (width >= 830px) {
     #block-12 p img {
         padding-left: 3.2rem;
         max-height: 6rem;
@@ -142,8 +137,7 @@ footer p:last-of-type {
 
 }
 
-@media screen and (min-width: 830px) and (max-width: 1200px) {
-
+@media screen and (width >= 830px) and (width <= 1200px) {
     footer .block:last-child {
         max-width: 40rem;
     }
@@ -155,8 +149,7 @@ footer p:last-of-type {
 
 }
 
-@media screen and (min-width: 1300px) {
-
+@media screen and (width >= 1300px) {
     #block-12 p img {
         padding-left: 3.2rem;
         max-height: 7rem;
@@ -193,8 +186,7 @@ footer p:last-of-type {
     font-size: 1.8rem;
 }
 
-@media screen and (min-width: 830px) {
-
+@media screen and (width >= 830px) {
     footer .content {
         flex-wrap: nowrap;
         justify-content: space-between;
@@ -241,8 +233,7 @@ footer .block .pell-actionbar {
     background: #eee;
 }
 
-@media screen and (min-width: 1440px) {
-
+@media screen and (width >= 1440px) {
     #logo {
         position: absolute;
     }
@@ -258,18 +249,15 @@ footer .block .pell-actionbar {
 
 }
 
-@media screen and (max-width: 1439px) {
-
+@media screen and (width <= 1439px) {
 /* overwrite */
 
     nav .inner {
         transition: height .2s;
         height: var(--nav-height);
-        flex-direction: row;
-        flex-wrap: wrap;
-		align-content: flex-start;
-        justify-content: flex-start;
-        margin: 0 0 auto 0;
+        flex-flow: row wrap;
+		place-content: flex-start flex-start;
+        margin: 0 0 auto;
     }
 
     nav.open .inner {
@@ -295,7 +283,7 @@ footer .block .pell-actionbar {
 
 	#links li {
 		margin-left: 0;
-        padding: 0 0 1.6rem 0;
+        padding: 0 0 1.6rem;
 	}
 
     #links .actions {
@@ -412,8 +400,6 @@ p.success {
 
 .page-17 .collapsible button.toggle {
     transform: rotate(180deg);
-    top: -3.3rem;
-    right: -1rem;
     filter: none;
     top: -4.2rem;
     right: -1.3rem;
@@ -562,13 +548,13 @@ p.success {
     margin: .8rem;
 }
 
-@media screen and (max-width: 1199px){
+@media screen and (width <= 1199px){
     .project .gallery li {
         width: calc(16.66% - 1.6rem);
     }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (width >= 1200px) {
     .project .gallery li {
         width: calc(8.33% - 1.6rem);
     }
@@ -578,8 +564,7 @@ p.success {
     display: none;
 }
 
-@media screen and (min-width: 768px) {
-
+@media screen and (width >= 768px) {
     .project .active.slider a.arrow {
         bottom: 5.5rem;
         left: 1.7rem;
@@ -602,7 +587,7 @@ p.success {
         z-index: 2;
         width: 42rem;
         height: calc(100vh - var(--nav-height));
-        background: rgba(0,0,0,.8);
+        background: rgb(0 0 0 / 80%);
         padding: var(--padding-two) var(--padding-one);
         transition: right .3s ease;
         display: flex;
@@ -662,8 +647,7 @@ p.success {
     padding-top: var(--padding-two);
 }
 
-@media screen and (max-width: 767px) {
-
+@media screen and (width <= 767px) {
     .project .upload-media {
         order: 1;   
         z-index: 1;
@@ -708,8 +692,7 @@ p.success {
 }
 
 
-@media screen and (min-width: 1200px) {
-
+@media screen and (width >= 1200px) {
     .project .active.slider img.narrow.slide {
         left: auto;
         right: 50%;
@@ -759,27 +742,22 @@ a.arrow:focus {
     height: auto;
     position: absolute;
     bottom: 0;
-    z-index: 3;
     margin-bottom: var(--padding-two);
     padding: 1.6rem 1.6rem 1.6rem var(--padding-one);
     max-width: 30rem;
-    background: rgba(0,0,0,.8);
+    background: rgb(0 0 0 / 80%);
     color: #fff;
     z-index: 100;
 }
 
-@media screen and (max-width: 767px) {
-
+@media screen and (width <= 767px) {
     .page-17 .slideshow.section .body {
         margin-bottom: 1.6rem;
         padding-left: 1.6rem;
     }
 
     .page-17 .active.slider a.arrow {
-        bottom: auto;
-        top: 3.2rem;
-        right: auto;
-        left: 0;
+        inset: 3.2rem auto auto 0;
     }
     
     .page-17 .active.slider a.arrow.next {
@@ -788,9 +766,9 @@ a.arrow:focus {
 
 }
 
-/*.page-17 .slideshow.section .collapsed .inside {
+/* .page-17 .slideshow.section .collapsed .inside {
     height: 7.8rem;
-}*/
+} */
 
 .page-17 .slideshow.section p:last-child {
     margin-bottom: 0;
@@ -851,8 +829,7 @@ a.arrow:focus {
     right: 1.8rem;
 }
 
-@media screen and (max-width: 767px) {
-    
+@media screen and (width <= 767px) {
     .collapsible .toggle {
         right: .2rem;
     }
@@ -915,8 +892,7 @@ a.arrow:focus {
     left: 1.8rem;
 }
 
-@media screen and (max-width: 991px) {
-
+@media screen and (width <= 991px) {
     .page-14 .collapsible .toggle {
         top: 7.2rem;
         position: absolute;
@@ -929,7 +905,7 @@ a.arrow:focus {
 
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (width <= 767px) {
     .page-14 .collapsible .toggle {
         right: 3.4rem;
     }
@@ -945,8 +921,7 @@ p > img + br {
     margin-bottom: 0;
 }
 
-@media screen and (min-width: 992px) {
-
+@media screen and (width >= 992px) {
     .page-14 .section .content {
         display: flex;
     }

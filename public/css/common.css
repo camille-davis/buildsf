@@ -2,24 +2,18 @@
 
 :root {
     --header-font: 'Oswald', sans-serif;
-
     --shade-one: #dedede;
     --shade-two: #eee;
     --shade-three: #fff;
-
     --shade-four: #eee;
     --shade-five: #fff;
-
     --text-one: #333;
     --text-two: #111;
-
 	--link-color: #8ca900;
     --hover-color: #ffc066;
-    --shadow-color: rgba(0,0,0,.1);
-
+    --shadow-color: rgb(0 0 0 / 10%);
     --padding-one: 3.2rem;
     --padding-two: 4rem;
-
     --nav-height: 9rem;
     --options-height: 5.2rem;
     --admin-bg: #333;
@@ -36,12 +30,11 @@
 	box-sizing: border-box;
 }
 
-input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+input[type="number"]::-webkit-inner-spin-button {
+  appearance: none;
 }
 
-input[type=number] {
-    -moz-appearance: textfield;
+input[type="number"] {
     appearance: textfield;
 }
 
@@ -221,7 +214,7 @@ h3 {
     padding: var(--padding-two) var(--padding-one);
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (width <= 767px) {
     .content {
         flex-direction: column;
 		padding-left: 1.6rem;
@@ -505,17 +498,14 @@ nav a:focus {
     color: var(--hover-color) !important;
 }
 
-@media screen and (max-width: 991px) {
-
+@media screen and (width <= 991px) {
     nav .inner {
         transition: height .2s;
         height: var(--nav-height);
-        flex-direction: row;
-        flex-wrap: wrap;
+        flex-flow: row wrap;
 		align-items: flex-start;
-		align-content: flex-start;
-        justify-content: flex-start;
-        margin: 0 0 auto 0;
+		place-content: flex-start flex-start;
+        margin: 0 0 auto;
     }
 
     nav.open .inner {
@@ -549,7 +539,7 @@ nav a:focus {
 
 	#links li {
 		margin-left: 0;
-        padding: 0 0 1.6rem 0;
+        padding: 0 0 1.6rem;
 	}
 
     #links .actions {
@@ -568,8 +558,7 @@ nav a:focus {
 
 }
 
-@media screen and (max-width: 767px) {
-
+@media screen and (width <= 767px) {
     nav .inner {
         padding-left: 1.6rem;
         padding-right: 1.6rem;
@@ -606,8 +595,7 @@ footer .content > .block {
     padding: 1.6rem;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1199px) {
-
+@media screen and (width >= 768px) and (width <= 1199px) {
     footer .content {
         flex-wrap: wrap;
     }
@@ -618,8 +606,7 @@ footer .content > .block {
 
 }
 
-@media screen and (max-width: 767px) {
-
+@media screen and (width <= 767px) {
     footer .content {
         padding-left: 0;
         padding-right: 0;
@@ -643,10 +630,10 @@ footer h3:first-child {
     margin-top: 0;
 }
 
-/*footer p,
+/* footer p,
 footer ul {
     margin-bottom: 0;
-}*/
+} */
 
 /* _User */
 
@@ -659,7 +646,7 @@ footer ul {
     background: var(--admin-bg);
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (width <= 767px) {
     .user {
         padding-left: 0;
         padding-right: 0;
@@ -801,7 +788,7 @@ main .container {
 	top: 0;
 	left: 0;
     padding: var(--padding-one);
-	background: rgba(13,13,30,.6);
+	background: rgb(13 13 30 / 60%);
 	opacity: 0;
 	transition: opacity .2s;
 }
@@ -817,7 +804,7 @@ main .container {
 	flex-direction: column;
     align-items: center;
 	padding: var(--padding-one) var(--padding-one) 1.6rem;
-	box-shadow: 10px 10px 90px rgba(0,0,51,.2);
+	box-shadow: 10px 10px 90px rgb(0 0 51 / 20%);
     background: #fff;
 }
 
@@ -1034,8 +1021,7 @@ h2.section-title {
     width: 30%;
 }
 
-@media screen and (max-width: 767px) {
-
+@media screen and (width <= 767px) {
     .section .image-right,
     .section .image-left {
         width: auto;
@@ -1186,19 +1172,19 @@ button.pell-button .svg-inline--fa {
     padding-bottom: 100%;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (width <= 991px) {
     .gallery li {
         width: calc(25% - .8rem);
     }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (width <= 767px) {
     .gallery li {
         width: calc(33.33% - .8rem);
     }
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (width <= 420px) {
     .gallery li {
         width: calc(50% - .8rem);
     }
@@ -1251,7 +1237,7 @@ button.pell-button .svg-inline--fa {
 
 #media-library .gallery {
     width: 100%;
-    margin: 0 0 1.2rem 0;
+    margin: 0 0 1.2rem;
     justify-content: center;
 }
 
@@ -1276,7 +1262,7 @@ a.selector {
 a.selector:hover,
 a.selector:focus,
 a.selected {
-    background-color: rgba(256,256,256,.6);
+    background-color: rgb(256 256 256 / 60%);
     cursor: pointer;
 }
 
@@ -1318,13 +1304,13 @@ a.selected .button {
     padding-bottom: 66.66%;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (width <= 767px) {
     .projects-list.gallery li {
         width: calc(100% - 1.6rem);
     }
 }
 
-@media screen and (min-width: 768px) and (max-width: 991px) {
+@media screen and (width >= 768px) and (width <= 991px) {
     .projects-list.gallery li {
         width: calc(50% - 1.6rem);
     }
@@ -1353,7 +1339,7 @@ a.selected .button {
 
 a:focus .project-label,
 a:hover .project-label {
-    background: rgba(0,0,0,.7);
+    background: rgb(0 0 0 / 70%);
     color: #fff;
 }
 
@@ -1541,6 +1527,7 @@ button:hover .hamburger-inner::after {
 .reviews .content:last-child {
     padding-bottom: var(--padding-two);
 }
+
 .review {
     margin: var(--padding-one) 0;
 }
@@ -1700,30 +1687,28 @@ button:hover .hamburger-inner::after {
 }
 
 #sib-form button svg {
-    -webkit-animation: indicator-spin 1.3s cubic-bezier(0.46, 0.35, 0.39, 0.85) infinite;
     animation: indicator-spin 1.3s cubic-bezier(0.46, 0.35, 0.39, 0.85) infinite;
     fill: #fff;
     width: 2.4rem;
     margin-right: .8rem;
 }
 
-@-webkit-keyframes indicator-spin {
+@keyframes indicator-spin {
     0% {
-        -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
-    to {
-        -webkit-transform: rotate(1turn);
+
+    100% {
         transform: rotate(1turn);
     }
 }
+
 @keyframes indicator-spin {
     0% {
-        -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
-    to {
-        -webkit-transform: rotate(1turn);
+
+    100% {
         transform: rotate(1turn);
     }
 }

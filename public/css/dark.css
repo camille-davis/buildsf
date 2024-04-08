@@ -6,10 +6,10 @@
     --shade-five: #092030;
     --text-one: #ccc;
     --text-two: #eee;
-    --link-color: #229999;
-    --shadow-color: rgba(0,0,0,0);
+    --link-color: #299;
+    --shadow-color: rgb(0 0 0 / 0%);
 }
 
 .prompt-container {
-    background: rgba(10,10,18,.9);
+    background: rgb(10 10 18 / 90%);
 }
