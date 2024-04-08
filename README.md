@@ -12,5 +12,7 @@ cp .env.example .env
 php artisan key:generate
 php artisan migrate
 php artisan serve
+npm install
+npm run build
 ```
 Then visit website at: `http://localhost:8000`
