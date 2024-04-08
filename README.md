@@ -2,6 +2,8 @@
 
 Live version: [BuildSF.com](https://buildsf.com)
 
+This site uses a custom-built CMS - install locally to test it out!
+
 ## Local Installation (includes test user)
 
 ```
@@ -12,21 +14,22 @@ Copy environment config:
 ```
 cp .env.example .env
 ```
-Open it and set `DB_CONNECTION=mysql`, uncomment rest of section.
+Open `.env` and set `DB_CONNECTION=mysql`. Uncomment the rest of the `DB` section (and customize if necessary).
+
+Create and import database (called `laravel` in this example, name may be different if you customized .env):
+```
+echo "create database laravel" | mysql -u root
+mysql -u root laravel < buildsf_db.sql
+```
 
 Install dependencies:
 ```
 composer install
 npm install
-npm run build
 ```
 Generate app key:
 ```
 php artisan key:generate
-```
-Import database:
-```
-mysql -u root laravel < buildsf_db.sql
 ```
 Start the server:
 ```
