@@ -2,7 +2,7 @@
 
 Live version: [BuildSF.com](https://buildsf.com)
 
-## Local Installation
+## Local Installation (includes test user)
 
 ```
 git clone git@github.com:camille-davis/buildsf.git
@@ -33,3 +33,9 @@ Start the server:
 php artisan serve
 ```
 Then visit website at: `http://localhost:8000`
+
+To log in, visit `http://localhost:8000/login` and use the following credentials:
+```
+username: test_user
+password: test_password
+```
