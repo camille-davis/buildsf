@@ -22,57 +22,55 @@ Route::group(['middleware' => 'throttle:100,1'], function ()
 
 	Route::group(['middleware' => 'auth'], function() {
 
-		Route::post('/admin/page', 'PageController@create');
-		Route::put('/admin/page/{id}', 'PageController@update');
-		Route::patch('/admin/page/weights', 'PageController@updateWeights');
-        Route::delete('/admin/page/{id}', 'PageController@discard');
+		Route::post('/admin/page', '\App\Http\Controllers\PageController@create');
+		Route::put('/admin/page/{id}', '\App\Http\Controllers\PageController@update');
+		Route::patch('/admin/page/weights', '\App\Http\Controllers\PageController@updateWeights');
+        Route::delete('/admin/page/{id}', '\App\Http\Controllers\PageController@discard');
 
-		Route::post('/admin/project', 'ProjectController@create');
-		Route::put('/admin/project/{id}', 'ProjectController@update');
-        Route::delete('/admin/project/{id}', 'ProjectController@discard');
+		Route::post('/admin/project', '\App\Http\Controllers\ProjectController@create');
+		Route::put('/admin/project/{id}', '\App\Http\Controllers\ProjectController@update');
+        Route::delete('/admin/project/{id}', '\App\Http\Controllers\ProjectController@discard');
 
-		Route::patch('/admin/projects/weights', 'ProjectController@updateWeights');
+		Route::patch('/admin/projects/weights', '\App\Http\Controllers\ProjectController@updateWeights');
 
-		Route::post('/admin/block', 'BlockController@create');
-		Route::put('/admin/blocks', 'BlockController@updateMultiple');
-        Route::delete('/admin/block/{id}', 'BlockController@discard');
+		Route::post('/admin/block', '\App\Http\Controllers\BlockController@create');
+		Route::put('/admin/blocks', '\App\Http\Controllers\BlockController@updateMultiple');
+        Route::delete('/admin/block/{id}', '\App\Http\Controllers\BlockController@discard');
 
-		Route::post('/admin/section', 'SectionController@create');
-		Route::put('/admin/section/{id}', 'SectionController@update');
-        Route::delete('/admin/section/{id}', 'SectionController@discard');
-        Route::patch('/admin/section/{id}/up', 'SectionController@moveUp');
-        Route::patch('/admin/section/{id}/down', 'SectionController@moveDown');
+		Route::post('/admin/section', '\App\Http\Controllers\SectionController@create');
+		Route::put('/admin/section/{id}', '\App\Http\Controllers\SectionController@update');
+        Route::delete('/admin/section/{id}', '\App\Http\Controllers\SectionController@discard');
+        Route::patch('/admin/section/{id}/up', '\App\Http\Controllers\SectionController@moveUp');
+        Route::patch('/admin/section/{id}/down', '\App\Http\Controllers\SectionController@moveDown');
 
-        Route::get('/admin/media', 'MediaController@showMediaForm');
-        Route::post('/admin/media', 'MediaController@uploadMedia');
-        Route::put('/admin/media/{id}', 'MediaController@updateMedia');
-        Route::delete('/admin/media/{id}', 'MediaController@deleteMedia');
-        Route::get('/admin/media-data/', 'MediaController@getMediaData');
-        Route::get('/admin/media-data/{stringIDs}', 'MediaController@getMediaData');
-        Route::get('/admin/media-data/project/{projectID}', 'MediaController@getProjectMediaData');
+        Route::get('/admin/media', '\App\Http\Controllers\MediaController@showMediaForm');
+        Route::post('/admin/media', '\App\Http\Controllers\MediaController@uploadMedia');
+        Route::put('/admin/media/{id}', '\App\Http\Controllers\MediaController@updateMedia');
+        Route::delete('/admin/media/{id}', '\App\Http\Controllers\MediaController@deleteMedia');
+        Route::get('/admin/media-data/', '\App\Http\Controllers\MediaController@getMediaData');
+        Route::get('/admin/media-data/{stringIDs}', '\App\Http\Controllers\MediaController@getMediaData');
+        Route::get('/admin/media-data/project/{projectID}', '\App\Http\Controllers\MediaController@getProjectMediaData');
 
-        Route::get('/admin/settings', 'SettingsController@showSettingsForm');
-        Route::put('/admin/settings', 'SettingsController@updateSettings');
+        Route::get('/admin/settings', '\App\Http\Controllers\SettingsController@showSettingsForm');
+        Route::put('/admin/settings', '\App\Http\Controllers\SettingsController@updateSettings');
 
-        Route::get('/admin/user', 'UserController@showForm');
-        Route::put('/admin/user', 'UserController@update');
+        Route::get('/admin/user', '\App\Http\Controllers\UserController@showForm');
+        Route::put('/admin/user', '\App\Http\Controllers\UserController@update');
 
 	});
 
-	Route::post('/contact', 'WebController@contactUs');
-	Route::post('/review', 'WebController@submitReview');
+	Route::post('/contact', '\App\Http\Controllers\WebController@contactUs');
+	Route::post('/review', '\App\Http\Controllers\WebController@submitReview');
 
-    Route::get('/review/approve/{id}', 'WebController@approveReview');
-    Route::get('/review/discard/{id}', 'WebController@discardReview');
+    Route::get('/review/approve/{id}', '\App\Http\Controllers\WebController@approveReview');
+    Route::get('/review/discard/{id}', '\App\Http\Controllers\WebController@discardReview');
 
     if (isset($settings->projects) && $settings->projects === 1) {
-        Route::get('/project/{slug}', 'ProjectController@show');
-        Route::get('/project/{slug}/next', 'ProjectController@showNext');
-        Route::get('/project/{slug}/prev', 'ProjectController@showPrev');
+        Route::get('/project/{slug}', '\App\Http\Controllers\ProjectController@show');
+        Route::get('/project/{slug}/next', '\App\Http\Controllers\ProjectController@showNext');
+        Route::get('/project/{slug}/prev', '\App\Http\Controllers\ProjectController@showPrev');
     }
 
-    Route::get('/', 'PageController@show');
-    Route::get('/{slug}', 'PageController@show');
-
-
+    Route::get('/', '\App\Http\Controllers\PageController@show');
+    Route::get('/{slug}', '\App\Http\Controllers\PageController@show');
 });
